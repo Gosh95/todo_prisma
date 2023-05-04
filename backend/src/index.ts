@@ -4,13 +4,15 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import passport from 'passport';
 import expressSession from 'express-session';
+import cookieParser from 'cookie-parser';
+
+import PassportAuth from './config/passport/passport';
+import LocalPassportAuth from './config/passport/passport.local';
 
 import Router from './routes/router';
 import UserRouter from './routes/user.router';
 import TaskRouter from './routes/task.router';
-import cookieParser from 'cookie-parser';
-import PassportAuth from './config/passport/passport';
-import LocalPassportAuth from './config/passport/passport.local';
+import AuthRouter from './routes/auth.router';
 
 class App {
   private readonly app: Express;
@@ -19,7 +21,7 @@ class App {
 
   constructor() {
     this.app = express();
-    this.routers = [new TaskRouter(), new UserRouter()];
+    this.routers = [new TaskRouter(), new UserRouter(), new AuthRouter()];
     this.passportAuth = new LocalPassportAuth();
     this.initConfig();
     this.initMiddlewares();
