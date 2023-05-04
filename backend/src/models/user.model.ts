@@ -6,6 +6,8 @@ import prisma from '../config/database/prisma.db';
 export type UserTasks = User & { tasks: Task[] };
 
 export interface UserModel extends CrudModel<User, number> {
+  findByEmail(email: string): Promise<User | null>;
+
   findUserTasksById(id: number): Promise<UserTasks | null>;
 }
 
@@ -20,6 +22,10 @@ class UserPrismaModel implements UserModel {
 
   async findById(id: number): Promise<User | null> {
     return await prisma.user.findUnique({ where: { id: id } });
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return await prisma.user.findUnique({ where: { email: email } });
   }
 
   async findUserTasksById(id: number): Promise<UserTasks | null> {

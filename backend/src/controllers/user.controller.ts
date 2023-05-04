@@ -2,7 +2,10 @@ import { RequestHandler } from 'express';
 
 import HttpStatus from '../consts/httpStatus.enum';
 import UserPrismaModel, { UserModel } from '../models/user.model';
+import bcrypt from 'bcrypt';
 import UserMapper from '../utils/user.mapper';
+
+const HASHING_COUNT = 12;
 
 class UserController {
   private readonly userModel: UserModel;
@@ -12,7 +15,9 @@ class UserController {
   }
 
   createUser: RequestHandler = async (req, res, _next) => {
-    const user = await this.userModel.create({ ...req.body });
+    const { password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, HASHING_COUNT);
+    const user = await this.userModel.create({ ...req.body, password: hashedPassword });
     return res.status(HttpStatus['CREATED']).header('Location', `/api/users/${user.id}`).send();
   };
 
