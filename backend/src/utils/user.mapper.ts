@@ -4,7 +4,7 @@ import { UserTasks } from '../models/user.model';
 import { UserDto, UserDetailDto, UserTasksDto } from '../dtos/user.dto';
 
 class UserMapper {
-  static toUserDto(user: User): UserDto {
+  static toUserDto = (user: User): UserDto => {
     return {
       id: user.id,
       name: user.name,
@@ -12,9 +12,9 @@ class UserMapper {
       role: user.role,
       createdAt: user.createdAt,
     };
-  }
+  };
 
-  static toUserDetailDto(user: User): UserDetailDto {
+  static toUserDetailDto = (user: User): UserDetailDto => {
     return {
       id: user.id,
       name: user.name,
@@ -23,9 +23,9 @@ class UserMapper {
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
-  }
+  };
 
-  static toUserTasksDto(userTasks: UserTasks): UserTasksDto {
+  static toUserTasksDto = (userTasks: UserTasks): UserTasksDto => {
     return {
       id: userTasks.id,
       name: userTasks.name,
@@ -43,7 +43,7 @@ class UserMapper {
         updatedAt: task.updatedAt,
       })),
     };
-  }
+  };
 }
 
 export default UserMapper;
