@@ -2,8 +2,8 @@ import { RequestHandler } from 'express';
 import passport from 'passport';
 
 import { AuthUser } from '../types';
-import { AuthError } from '../errors/error';
-import HttpStatus from '../consts/httpStatus.enum';
+import { AuthError } from '../commons/errors/error';
+import HttpStatus from '../commons/consts/httpStatus.enum';
 import AuthMapper from '../utils/auth.mapper';
 
 class AuthController {

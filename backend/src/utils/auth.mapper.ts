@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 
-import AuthUserDto from '../dtos/auth.dto';
+import AuthUserDto from '../commons/dtos/auth.dto';
 
 class AuthMapper {
   static toAuthUserDto = (user: User): AuthUserDto => {

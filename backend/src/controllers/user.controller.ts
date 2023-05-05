@@ -1,10 +1,10 @@
 import { RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 
-import HttpStatus from '../consts/httpStatus.enum';
+import HttpStatus from '../commons/consts/httpStatus.enum';
 import UserPrismaModel, { UserModel } from '../models/user.model';
 import UserMapper from '../utils/user.mapper';
-import { NotFoundError } from '../errors/error';
+import { NotFoundError } from '../commons/errors/error';
 
 const HASHING_COUNT = 12;
 

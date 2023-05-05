@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { AuthError } from '../errors/error';
+import { AuthError } from '../commons/errors/error';
 
 class AuthMiddleware {
   isAuthenticated: RequestHandler = (req, _res, next) => {

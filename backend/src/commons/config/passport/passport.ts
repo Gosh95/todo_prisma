@@ -1,7 +1,7 @@
 import passport from 'passport';
-import { AuthUser } from '../../types';
+import { AuthUser } from '../../../types';
 
-import UserPrismaModel, { UserModel } from '../../models/user.model';
+import UserPrismaModel, { UserModel } from '../../../models/user.model';
 
 export interface PassportAuth {
   setStrategy: () => void;

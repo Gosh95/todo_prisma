@@ -6,14 +6,14 @@ import passport from 'passport';
 import expressSession from 'express-session';
 import cookieParser from 'cookie-parser';
 
-import PassportAuth from './config/passport/passport';
-import LocalPassportAuth from './config/passport/passport.local';
+import PassportAuth from './commons/config/passport/passport';
+import LocalPassportAuth from './commons/config/passport/passport.local';
 
 import Router from './routes/router';
 import UserRouter from './routes/user.router';
 import TaskRouter from './routes/task.router';
 import AuthRouter from './routes/auth.router';
-import ErrorHandler from './errors/error.handler';
+import ErrorHandler from './commons/errors/error.handler';
 
 class App {
   private readonly app: Express;

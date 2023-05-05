@@ -1,4 +1,4 @@
-import ErrorDto from '../dtos/error.dto';
+import ErrorDto from '../commons/dtos/error.dto';
 
 class ErrorMapper {
   static toErrorDto = (error: Error): ErrorDto => {

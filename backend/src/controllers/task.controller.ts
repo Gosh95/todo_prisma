@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
 
-import HttpStatus from '../consts/httpStatus.enum';
+import HttpStatus from '../commons/consts/httpStatus.enum';
 import TaskPrismaModel, { TaskModel } from '../models/task.model';
 import TaskMapper from '../utils/task.mapper';
-import { NotFoundError } from '../errors/error';
+import { NotFoundError } from '../commons/errors/error';
 
 class TaskController {
   private readonly taskModel: TaskModel;

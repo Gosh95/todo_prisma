@@ -1,7 +1,7 @@
 import { Task } from '@prisma/client';
 
 import CrudModel from './model';
-import prisma from '../config/database/prisma.db';
+import prisma from '../commons/config/database/prisma.db';
 
 export interface TaskModel extends CrudModel<Task, number> {}
 
