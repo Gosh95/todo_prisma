@@ -1,4 +1,4 @@
-import express, { Express } from 'express';
+import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -6,19 +6,17 @@ import passport from 'passport';
 import expressSession from 'express-session';
 import cookieParser from 'cookie-parser';
 
-import PassportAuth from './commons/config/passport';
 import LocalPassportAuth from './commons/config/passport/passport.local';
 
-import Router from './routes';
 import UserRouter from './routes/user.router';
 import TaskRouter from './routes/task.router';
 import AuthRouter from './routes/auth.router';
 import ErrorHandler from './commons/errors/error.handler';
 
 class App {
-  private readonly app: Express;
-  private readonly passportAuth: PassportAuth;
-  private readonly routers: Router[];
+  private readonly app;
+  private readonly passportAuth;
+  private readonly routers;
   private readonly errorHandler;
 
   constructor() {

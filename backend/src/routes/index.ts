@@ -7,8 +7,8 @@ interface Router {
 }
 
 export abstract class AbstractRouter implements Router {
-  protected router: ExpressRouter;
-  protected apiPath: string;
+  protected router;
+  protected apiPath;
 
   constructor(apiPath: string) {
     this.router = ExpressRouter();

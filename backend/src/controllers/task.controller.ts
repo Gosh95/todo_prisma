@@ -1,12 +1,12 @@
 import { RequestHandler } from 'express';
 
 import HttpStatus from '../commons/consts/httpStatus.enum';
-import TaskPrismaModel, { TaskModel } from '../models/task.model';
+import TaskPrismaModel from '../models/task.model';
 import TaskMapper from '../commons/utils/task.mapper';
 import { NotFoundError } from '../commons/errors';
 
 class TaskController {
-  private readonly taskModel: TaskModel;
+  private readonly taskModel;
 
   constructor() {
     this.taskModel = new TaskPrismaModel();

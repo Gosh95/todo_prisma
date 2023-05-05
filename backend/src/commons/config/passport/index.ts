@@ -1,14 +1,14 @@
 import passport from 'passport';
 import { AuthUser } from '../../../types';
 
-import UserPrismaModel, { UserModel } from '../../../models/user.model';
+import UserPrismaModel from '../../../models/user.model';
 
 export interface PassportAuth {
   setStrategy: () => void;
 }
 
 abstract class AbstractPassportAuth implements PassportAuth {
-  protected readonly userModel: UserModel;
+  protected readonly userModel;
 
   constructor() {
     this.userModel = new UserPrismaModel();

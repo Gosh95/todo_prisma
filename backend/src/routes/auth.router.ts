@@ -4,7 +4,7 @@ import ValidateMiddleware from '../middlewares/validate.middleware';
 import LoginSchema from '../commons/validators/auth.validator';
 
 class AuthRouter extends AbstractRouter {
-  private readonly authController: AuthController;
+  private readonly authController;
 
   constructor() {
     super('/api/auth');
