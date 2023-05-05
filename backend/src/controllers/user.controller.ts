@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { Request, RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 
 import HttpStatus from '../commons/consts/httpStatus.enum';
@@ -6,7 +6,7 @@ import UserPrismaModel from '../models/user.model';
 import UserMapper from '../commons/utils/user.mapper';
 import { NotFoundError } from '../commons/errors';
 
-const HASHING_COUNT = 12;
+const HASH_ROUND = 12;
 
 class UserController {
   private readonly userModel;
@@ -16,8 +16,7 @@ class UserController {
   }
 
   createUser: RequestHandler = async (req, res, _next) => {
-    const { password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, HASHING_COUNT);
+    const hashedPassword = await this.hashPassword(req);
     const user = await this.userModel.create({ ...req.body, password: hashedPassword });
     return res.status(HttpStatus['CREATED']).header('Location', `/api/users/${user.id}`).send();
   };
@@ -50,7 +49,8 @@ class UserController {
 
   updateUser: RequestHandler = async (req, res, _next) => {
     const id = parseInt(req.params['id']);
-    await this.userModel.updateById(id, { ...req.body });
+    const hashedPassword = await this.hashPassword(req);
+    await this.userModel.updateById(id, { ...req.body, password: hashedPassword });
     return res.status(HttpStatus['NO_CONTENT']).send();
   };
 
@@ -58,6 +58,11 @@ class UserController {
     const id = parseInt(req.params['id']);
     await this.userModel.deleteById(id);
     return res.status(HttpStatus['NO_CONTENT']).send();
+  };
+
+  private hashPassword = async (req: Request) => {
+    const { password } = req.body;
+    return await bcrypt.hash(password, HASH_ROUND);
   };
 }
 
