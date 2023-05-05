@@ -1,6 +1,6 @@
 import { Task } from '@prisma/client';
 
-import { TaskDto, TaskDetailDto } from '../commons/dtos/task.dto';
+import { TaskDto, TaskDetailDto } from '../dtos/task.dto';
 
 class TaskMapper {
   static toTaskDto = (task: Task): TaskDto => {

@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 import HttpStatus from '../commons/consts/httpStatus.enum';
 import UserPrismaModel, { UserModel } from '../models/user.model';
-import UserMapper from '../utils/user.mapper';
+import UserMapper from '../commons/utils/user.mapper';
 import { NotFoundError } from '../commons/errors';
 
 const HASHING_COUNT = 12;

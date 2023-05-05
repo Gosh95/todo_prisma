@@ -4,7 +4,7 @@ import passport from 'passport';
 import { AuthUser } from '../types';
 import { AuthError } from '../commons/errors';
 import HttpStatus from '../commons/consts/httpStatus.enum';
-import AuthMapper from '../utils/auth.mapper';
+import AuthMapper from '../commons/utils/auth.mapper';
 
 class AuthController {
   login: RequestHandler = (req, res, next) => {

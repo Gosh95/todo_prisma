@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 
 import HttpStatus from '../commons/consts/httpStatus.enum';
 import TaskPrismaModel, { TaskModel } from '../models/task.model';
-import TaskMapper from '../utils/task.mapper';
+import TaskMapper from '../commons/utils/task.mapper';
 import { NotFoundError } from '../commons/errors';
 
 class TaskController {

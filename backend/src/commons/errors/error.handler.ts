@@ -3,7 +3,7 @@ import { ValidationError } from 'joi';
 
 import HttpStatus from '../consts/httpStatus.enum';
 import { AuthError, NotFoundError } from '.';
-import ErrorMapper from '../../utils/error.mapper';
+import ErrorMapper from '../utils/error.mapper';
 
 class ErrorHandler {
   handleNotFoundApiPath: RequestHandler = (_req, _res, next) => {

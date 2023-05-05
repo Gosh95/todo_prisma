@@ -1,7 +1,7 @@
 import { User } from '@prisma/client';
 
-import { UserTasks } from '../models/user.model';
-import { UserDto, UserDetailDto, UserTasksDto } from '../commons/dtos/user.dto';
+import { UserTasks } from '../../models/user.model';
+import { UserDto, UserDetailDto, UserTasksDto } from '../dtos/user.dto';
 
 class UserMapper {
   static toUserDto = (user: User): UserDto => {
