@@ -6,19 +6,17 @@ import { TaskCreateSchema, TaskUpdateSchema } from '../commons/validators/task.v
 
 class TaskRouter extends AbstractRouter {
   private readonly taskController;
-  private readonly authMiddleware;
 
   constructor() {
     super('/api/tasks');
     this.taskController = new TaskController();
-    this.authMiddleware = new AuthMiddleware();
     this.initRouter();
   }
 
   initRouter = () => {
     this.router.post(
       '/',
-      this.authMiddleware.isAuthenticated,
+      AuthMiddleware.isAuthenticated(),
       ValidateMiddleware.validate(TaskCreateSchema),
       this.taskController.createTask
     );
@@ -26,11 +24,11 @@ class TaskRouter extends AbstractRouter {
     this.router.get('/:id', this.taskController.getTaskDetail);
     this.router.put(
       '/:id',
-      this.authMiddleware.isAuthenticated,
+      AuthMiddleware.isAuthenticated(),
       ValidateMiddleware.validate(TaskUpdateSchema),
       this.taskController.updateTask
     );
-    this.router.delete('/:id', this.authMiddleware.isAuthenticated, this.taskController.deleteTask);
+    this.router.delete('/:id', AuthMiddleware.isAuthenticated(), this.taskController.deleteTask);
   };
 }
 
