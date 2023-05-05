@@ -3,6 +3,7 @@ import { RequestHandler } from 'express';
 import HttpStatus from '../consts/httpStatus.enum';
 import TaskPrismaModel, { TaskModel } from '../models/task.model';
 import TaskMapper from '../utils/task.mapper';
+import { NotFoundError } from '../errors/error';
 
 class TaskController {
   private readonly taskModel: TaskModel;
@@ -22,10 +23,13 @@ class TaskController {
     return res.status(HttpStatus['OK']).send(taskDtos);
   };
 
-  getTaskDetail: RequestHandler = async (req, res, _next) => {
+  getTaskDetail: RequestHandler = async (req, res, next) => {
     const id = parseInt(req.params['id']);
     const task = await this.taskModel.findById(id);
-    const taskDetailDto = TaskMapper.toTaskDetailDto(task!);
+    if (!task) {
+      return next(new NotFoundError(`Not found task by id. (id: ${id})`));
+    }
+    const taskDetailDto = TaskMapper.toTaskDetailDto(task);
     return res.status(HttpStatus['OK']).send(taskDetailDto);
   };
 

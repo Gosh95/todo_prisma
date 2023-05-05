@@ -1,11 +1,13 @@
 import { RequestHandler } from 'express';
 
+import { AuthError } from '../errors/error';
+
 class AuthMiddleware {
   isAuthenticated: RequestHandler = (req, _res, next) => {
     if (req.isAuthenticated()) {
-      next();
+      return next();
     }
-    next(new Error('Authentication is required.'));
+    next(new AuthError('Authentication is required.'));
   };
 }
 

@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import passport from 'passport';
 
 import { AuthUser } from '../types';
+import { AuthError } from '../errors/error';
 import HttpStatus from '../consts/httpStatus.enum';
 import AuthMapper from '../utils/auth.mapper';
 
@@ -9,14 +10,14 @@ class AuthController {
   login: RequestHandler = (req, res, next) => {
     passport.authenticate('local', (err: Error, user: AuthUser) => {
       if (err) {
-        return next(err);
+        return next(new AuthError(err.message));
       }
       if (!user) {
-        return next(new Error('Failed to authentication'));
+        return next(new AuthError('Incorrect email or password.'));
       }
-      req.logIn(user, (err) => {
+      req.logIn(user, (err: Error) => {
         if (err) {
-          return next(err);
+          return next(new AuthError(err.message));
         }
         const authUserDto = AuthMapper.toAuthUserDto(user);
         res.status(HttpStatus['OK']).send(authUserDto);

@@ -13,19 +13,23 @@ import Router from './routes/router';
 import UserRouter from './routes/user.router';
 import TaskRouter from './routes/task.router';
 import AuthRouter from './routes/auth.router';
+import ErrorHandler from './errors/error.handler';
 
 class App {
   private readonly app: Express;
-  private readonly routers: Router[];
   private readonly passportAuth: PassportAuth;
+  private readonly routers: Router[];
+  private readonly errorHandler;
 
   constructor() {
     this.app = express();
-    this.routers = [new TaskRouter(), new UserRouter(), new AuthRouter()];
     this.passportAuth = new LocalPassportAuth();
+    this.routers = [new TaskRouter(), new UserRouter(), new AuthRouter()];
+    this.errorHandler = new ErrorHandler();
     this.initConfig();
     this.initMiddlewares();
     this.initRouters();
+    this.initErrorHandlers();
   }
 
   private initConfig() {
@@ -55,6 +59,11 @@ class App {
 
   private initRouters = () => {
     this.routers.forEach((router) => this.app.use(router.getApiPath(), router.getRouter()));
+  };
+
+  private initErrorHandlers = () => {
+    this.app.use(this.errorHandler.handleNotFoundApiPath);
+    this.app.use(this.errorHandler.handleErrors);
   };
 
   start = () => {
