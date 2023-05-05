@@ -36,7 +36,7 @@ class AuthController {
         }
       });
     });
-    res.clearCookie('connect.sid').status(HttpStatus['NO_CONTENT']).send();
+    res.clearCookie(process.env.COOKIE_NAME!).status(HttpStatus['NO_CONTENT']).send();
   };
 }
 

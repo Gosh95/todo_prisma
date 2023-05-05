@@ -38,7 +38,7 @@ class App {
   }
 
   private initMiddlewares = () => {
-    const { SESSION_SECRET, COOKIE_MAX_AGE } = process.env;
+    const { SESSION_SECRET, COOKIE_NAME, COOKIE_MAX_AGE } = process.env;
 
     this.app.use(morgan('dev'));
     this.app.use(express.json());
@@ -47,6 +47,7 @@ class App {
     this.app.use(
       expressSession({
         secret: SESSION_SECRET!,
+        name: COOKIE_NAME!,
         cookie: { path: '/', maxAge: Number(COOKIE_MAX_AGE), signed: true, httpOnly: true, secure: false },
         resave: false,
         saveUninitialized: false,
