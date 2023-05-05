@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcrypt';
 
-import AbstractPassportAuth from './passport';
+import AbstractPassportAuth from '.';
 
 const AUTH_FAILED_MESSAGE = 'Incorrect email or password.';
 

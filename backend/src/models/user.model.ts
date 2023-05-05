@@ -1,7 +1,7 @@
 import { User, Task } from '@prisma/client';
 
-import CrudModel from './model';
-import prisma from '../commons/config/database/prisma.db';
+import CrudModel from '.';
+import prisma from '../commons/config/database';
 
 export type UserTasks = User & { tasks: Task[] };
 

@@ -1,4 +1,4 @@
-import { AbstractRouter } from './router';
+import { AbstractRouter } from '.';
 import TaskController from '../controllers/task.controller';
 import AuthMiddleware from '../middlewares/auth.middleware';
 import ValidateMiddleware from '../middlewares/validate.middleware';

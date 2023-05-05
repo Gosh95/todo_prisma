@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import passport from 'passport';
 
 import { AuthUser } from '../types';
-import { AuthError } from '../commons/errors/error';
+import { AuthError } from '../commons/errors';
 import HttpStatus from '../commons/consts/httpStatus.enum';
 import AuthMapper from '../utils/auth.mapper';
 

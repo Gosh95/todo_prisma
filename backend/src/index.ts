@@ -6,10 +6,10 @@ import passport from 'passport';
 import expressSession from 'express-session';
 import cookieParser from 'cookie-parser';
 
-import PassportAuth from './commons/config/passport/passport';
+import PassportAuth from './commons/config/passport';
 import LocalPassportAuth from './commons/config/passport/passport.local';
 
-import Router from './routes/router';
+import Router from './routes';
 import UserRouter from './routes/user.router';
 import TaskRouter from './routes/task.router';
 import AuthRouter from './routes/auth.router';

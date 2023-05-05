@@ -1,4 +1,4 @@
-import { AbstractRouter } from './router';
+import { AbstractRouter } from '.';
 import AuthController from '../controllers/auth.controller';
 import ValidateMiddleware from '../middlewares/validate.middleware';
 import LoginSchema from '../commons/validators/auth.validator';
