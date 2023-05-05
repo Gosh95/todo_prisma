@@ -11,8 +11,8 @@ class AuthRouter extends AbstractRouter {
   }
 
   initRouter = () => {
-    this.router.post('/login', this.authController.login);
-    this.router.delete('/logout', this.authController.logout);
+    this.router.post('/', this.authController.login);
+    this.router.delete('/', this.authController.logout);
   };
 }
 
