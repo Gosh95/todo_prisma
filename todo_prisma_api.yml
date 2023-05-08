@@ -1,0 +1,334 @@
+openapi: 3.1.0
+info:
+  version: 0.0.1
+  title: Todo Prisma API
+  description: |
+    **Todo Prisma API Open API Specification**
+  contact:
+    name: Gosh95
+    email: goshk1995@gmail.com
+tags:
+  - name: User
+    description: User API Endpoint
+servers:
+  - url: http://localhost:8080/api
+    description: Dev server.
+paths:
+  /users:
+    get:
+      operationId: getUsers
+      tags:
+        - User
+      security:
+        - CookieSessionAuth: []
+      summary:
+        Get list of users
+      description:
+        Endpoint for get list of users.
+      responses:
+        '200':
+          description: |
+            Succeed to get list of users.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+        '401':
+          $ref: "#/components/responses/UnauthorizedErrorResponse"
+    post:
+      operationId: createUser
+      tags:
+        - User
+      summary: Create a new user
+      description: Endpoint for create a new user.
+      requestBody:
+        required: true
+        description: Request body for create a new user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateReq'
+              required: [name, email, password]
+            examples:
+              UserCreateReqExample:
+                value:
+                  name: kim
+                  email: user12@gamil.com
+                  password: user12!!
+      responses:
+        '201':
+          description: Succeed to create a new user.
+          content:
+            application/json: {}
+        '400':
+          $ref: '#/components/responses/UserValidationErrorResponse'
+  /users/{userId}:
+    get:
+      operationId: getUserDetail
+      tags:
+        - User
+      security:
+        - CookieSessionAuth: []
+      summary: Get a user detail
+      description: Endpoint for get a user detail.
+      parameters:
+        - $ref: "#/components/parameters/UserIdPathParam"
+      responses:
+        '200':
+          description: Succeed to get a user detail.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDetail"
+        '401':
+          $ref: "#/components/responses/UnauthorizedErrorResponse"
+        '404':
+          $ref: '#/components/responses/NotFoundUserByIdErrorResponse'
+    put:
+      operationId: updateUser
+      tags:
+        - User
+      security:
+        - CookieSessionAuth: []
+      summary: Update a user
+      description: Endpoint for update a user.
+      parameters:
+        - $ref: "#/components/parameters/UserIdPathParam"
+      requestBody:
+        required: true
+        description: Request body for update a user.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateReq"
+      responses:
+        '204':
+          description: Succeed to update a user.
+          content:
+            application/json: {}
+        '400':
+          $ref: '#/components/responses/UserValidationErrorResponse'
+        '401':
+          $ref: "#/components/responses/UnauthorizedErrorResponse"
+        '404':
+          $ref: "#/components/responses/NotFoundUserByIdErrorResponse"
+    delete:
+      operationId: deleteUser
+      tags:
+        - User
+      security:
+        - CookieSessionAuth: []
+      summary: Delete a user
+      description: Endpoint for delete a user.
+      parameters:
+        - $ref: "#/components/parameters/UserIdPathParam"
+      responses:
+        '204':
+          description: Succeed to delete a user.
+          content:
+            application/json: {}
+        '401':
+          $ref: "#/components/responses/UnauthorizedErrorResponse"
+        '404':
+          $ref: '#/components/responses/NotFoundUserByIdErrorResponse'
+  /users/{userId}/tasks:
+    get:
+      operationId: getUserTasks
+      tags:
+        - User
+      security:
+        - CookieSessionAuth: []
+      summary: Get a user and list of user's tasks
+      description: Endpoint for get a user and list of user's tasks.
+      parameters:
+        - $ref: "#/components/parameters/UserIdPathParam"
+      responses:
+        '200':
+          description: Succeed to get a user and list of user's tasks.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserTasks"
+        '401':
+          $ref: "#/components/responses/UnauthorizedErrorResponse"
+        '404':
+          $ref: '#/components/responses/NotFoundUserByIdErrorResponse'
+components:
+  parameters:
+    UserIdPathParam:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+        example: 1
+  schemas:
+    Error:
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+            - USER
+            - ROLE
+        createdAt:
+          type: string
+          format: date-time
+      example:
+        id: 1
+        name: John
+        email: john12@gmail.com
+        role: USER
+        createdAt: 2023-05-08T01:57:34.224Z
+    Users:
+      type: array
+      items:
+        $ref: "#/components/schemas/User"
+      example:
+        - id: 1
+          name: John
+          email: john12@gmail.com
+          role: USER
+          createdAt: 2023-05-08T01:57:34.224Z
+        - id: 2
+          name: chris
+          email: chris12@gmail.com
+          role: USER
+          createdAt: 2023-05-08T01:57:34.224Z
+    UserDetail:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - updatedAt:
+            type: string
+            format: date-time
+          example:
+            updatedAt: 2023-05-08T01:57:34.224Z
+    UserTasks:
+      allOf:
+        - $ref: "#/components/schemas/User"
+        - tasks:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: number
+                  format: int64
+                title:
+                  type: string
+                description:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - PENDING
+                    - IN_PROGRESS
+                    - ARCHIVED
+                dueDate:
+                  type: string
+                  format: date-time
+                createdAt:
+                  type: string
+                  format: date-time
+                updatedAt:
+                  type: string
+                  format: date-time
+          example:
+            tasks: 
+              - id: 1
+                title: study
+                description: read a book.
+                status: IN_PROGRESS
+                dueDate: 2023-05-09T00:00:00.000Z
+                createdAt: 2023-05-08T01:57:34.224Z
+                updatedAt: 2023-05-08T01:57:34.224Z
+    UserCreateReq:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 60
+          empty: false
+        email:
+          type: string
+          maxLength: 120
+          empty: false
+          format: email
+        password:
+          type: string
+          empty: false
+          pattern: '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,32}$'
+      example:
+        name: John
+        email: john12@gmail.com
+        password: john12!!
+    UserUpdateReq:
+      allOf:
+        - $ref: '#/components/schemas/UserCreateReq'
+        - role:
+            type: string
+            enum:
+              - USER
+              - ADMIN
+          example:
+            role: USER
+  responses:
+    UnauthorizedErrorResponse:
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          examples:
+            UnauthorizedErrorResponse:
+              value:
+                name: AuthError
+                message: "Authentication is required."
+    NotFoundUserByIdErrorResponse:
+      description: Not found user by id.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          examples:
+            NotFoundUserByIdExample:
+              value:
+                name: NotFoundError
+                message: "Not found user by id. (id: 1)"
+    UserValidationErrorResponse:
+      description: Failed to validation of user request. 
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          examples:
+            IncorrectEmailExample:
+              value:
+                name: ValidationError
+                message: Please enter a valid email address format.
+            IncorrectPasswordExample:
+              value:
+                name: ValidationError
+                message: Password must be 8-32 characters long and contain at least one letter, one number, one special character.
+  securitySchemes:
+    CookieSessionAuth:
+      type: apiKey
+      in: header
+      name: connect.sid
+
+
